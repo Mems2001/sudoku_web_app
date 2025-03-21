@@ -1,0 +1,4 @@
+.homeButtons {
+    display: flex;
+    flex-direction: column;
+}
