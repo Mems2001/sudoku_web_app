@@ -52,16 +52,46 @@ function Home() {
   )
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Web App</h1>
-      </header>
-      <div className="homeButtons">
+    <div className="home">
+      {/* <div className="homeButtons">
         <h2>API</h2>
         <button onClick={goToPuzzle}>Play</button>
         <button onClick={createSudoku}>Create Sudoku</button>
         <p>{sudokusCount}</p>
-      </div>
+      </div> */}
+      {/* Background design */}
+      <section className="background">
+      
+        <h1 className="game-title">5UD0KU</h1>
+        <h1 className="game-version">2.1</h1>
+
+        <div className="home-buttons">
+          <button className="home-button" onClick={goToPuzzle}>PLAY</button>
+          <button className="home-button">SIGNIN</button>
+          <button className="home-button">SIGNUP</button>
+        </div>
+        
+        <div className="background-h">
+          <div className="line-h"></div>
+          <div className="line-h"></div>
+          <div className="line-h"></div>
+          <div className="line-h"></div>
+          <div className="line-h"></div>
+          <div className="line-h"></div>
+          <div className="line-h"></div>
+          <div className="line-h"></div>
+        </div>
+        <div className="background-v">
+          <div className="line-v"></div>
+          <div className="line-v"></div>
+          <div className="line-v"></div>
+          <div className="line-v"></div>
+          <div className="line-v"></div>
+          <div className="line-v"></div>
+          <div className="line-v"></div>
+          <div className="line-v"></div>
+        </div>
+      </section>
     </div>
   )
 }
