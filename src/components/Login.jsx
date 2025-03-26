@@ -3,7 +3,8 @@ import { useState } from "react"
 import { useForm } from 'react-hook-form'
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setLoggedIn } from '../features/isLogged.slice'
+import { setLoggedIn , setLoggedOut } from '../features/isLogged.slice'
+import { setRole } from '../features/role.slice'
 
 axios.defaults.withCredentials = true;
 
@@ -46,11 +47,27 @@ function Login() {
         newData['password'] = data.password
 
         const URL = 'http://localhost:443/api/v1/auth/login';
+        const URL2 = 'http://localhost:443/api/v1/auth/authenticate_session';
         axios.post(URL , newData)
             .then(res => {
                 console.log(res)
-                dispatch(setLoggedIn())
-                navigate('/')
+                axios.get(URL2)
+                .then((response) => {
+                    console.log(response.data , response.status)
+                    if (response.status == 200) {
+                        dispatch(setLoggedIn())
+                        dispatch(setRole(response.data.role))
+                    } else {
+                        dispatch(setLoggedOut())
+                        dispatch(setRole('anon'))
+                    }
+                    navigate('/')
+                })
+                .catch((error) => {
+                    console.error('Error:', error)
+                    dispatch(setLoggedOut())
+                    dispatch(setRole('anon'))
+                })
             })
             .catch(err => {
                 console.error('Error:', err)

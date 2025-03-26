@@ -13,16 +13,22 @@ function Home() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  function goToPuzzle () {
-    const URL = 'http://localhost:443/api/v1/sudokus/get_random';
-    axios.get(URL)
-        .then((response) => {
-            // console.log(response.data);
-            navigate(`/puzzle/${response.data.id}`);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        })
+  async function goToPuzzle () {
+    const URL = 'http://localhost:443/api/v1/puzzles/get_random'
+    const URL2 = 'http://localhost:443/api/v1/games'
+    try {
+      const puzzle = await axios.get(URL).catch((error) => {console.error('Error:', error);})
+      // console.log(puzzle)
+      const body = {
+        puzzle_id: puzzle.data.id,
+        sudoku_id: puzzle.data.sudoku_id
+      }
+      const game = await axios.post(URL2 , body).catch(error => {console.error(error)})
+      // console.log(game)
+      navigate(`/game/${game.data.id}`)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   function logout() {

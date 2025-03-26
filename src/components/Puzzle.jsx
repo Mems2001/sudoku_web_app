@@ -7,7 +7,9 @@ function Puzzle () {
     const { getValues , register } = useForm()
     const [sudoku, setSudoku] = useState(null)
     const [puzzle , setPuzzle] = useState(null)
-    const puzzle_id = useParams().puzzle_id
+    const [validations , setValidations] = useState(Array.from({length: 9}, () => Array(9).fill(0)))
+    const [answers , setAnswers] = useState(null)
+    const game_id = useParams().game_id
 
     const cells = [];
     for (let i=0 ; i < 9 ; i++) {
@@ -17,32 +19,43 @@ function Puzzle () {
     };
 
     function verifyNumber (c) {
-      console.log(sudoku[c[0]][c[1]])
-      const val = getValues(c)
+      // console.log(sudoku[c[0]][c[1]])
+      let cell = document.getElementById(c);
+      let val = getValues(c)
+      let validatedGrid = validations
+      let row = validations[c[0]]
       if (val == sudoku[c[0]][c[1]]) {
-        return true
+        row.splice(c[1] , 1 , 1)
+        validatedGrid.splice(c[0] , 1 , row)
+        cell.classList.remove('incorrect')
+        cell.classList.add('correct')
+        cell.disabled = true
       } else {
-        return false
+        row.splice(c[1] , 1 , 0)
+        validatedGrid.splice(c[0] , 1 , row)
+        cell.classList.remove('correct')
+        cell.classList.add('incorrect')
       }
+      setValidations(validatedGrid)
     }
 
     useEffect(() => {
-       const URL = `http://localhost:443/api/v1/sudokus/${puzzle_id}`
-       const URL2 = `http://localhost:443/api/v1/puzzles/${puzzle_id}`
+       const URL = `http://localhost:443/api/v1/games/${game_id}`
+      //  const URL2 = `http://localhost:443/api/v1/puzzles/${puzzle_id}`
          axios.get(URL)
-            .then((response) => {
-              setSudoku(response.data.grid)
-            })
-            .catch((error) => {
-              console.error('Error:', error)
-            })
-        axios.get(URL2)
             .then((response) => {
               setPuzzle(response.data.grid)
             })
             .catch((error) => {
               console.error('Error:', error)
             })
+        // axios.get(URL2)
+        //     .then((response) => {
+        //       setPuzzle(response.data.grid)
+        //     })
+        //     .catch((error) => {
+        //       console.error('Error:', error)
+        //     })
     }, []);
 
     if (puzzle) {
@@ -50,22 +63,22 @@ function Puzzle () {
           <div>
             <h1>Puzzle</h1>
             <div>
-                <table>
-                    <tbody className="grid">
+                
+                    <div className="grid">
                     {cells.map((cell, index) => {
                         return (
-                        <tr className="cell" key={index}>
+                        <div className="cell" key={index}>
                             {puzzle[cell[0]][cell[1]] != 0?
-                                <td>{puzzle[cell[0]][cell[1]]}</td>
+                                <p>{puzzle[cell[0]][cell[1]]}</p>
                             : 
-                                <input id={cell} type="text"
+                                <input id={cell} type="text" className={validations[cell[0]][cell[1]] == 1 ? 'correct' : 'incorrect'} disabled={validations[cell[0]][cell[1]] == 1}
                                 {...register(`${cell}` , {onChange:() => verifyNumber(cell)})}/>
                             }
-                        </tr>
+                        </div>
                         )
                     })}
-                    </tbody>
-                </table>
+                    </div>
+                
             </div>
           </div>
         )

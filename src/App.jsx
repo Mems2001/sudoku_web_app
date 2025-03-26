@@ -53,7 +53,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/puzzle/:puzzle_id' element={<Puzzle />}/>
+        <Route path='/game/:game_id' element={<Puzzle />}/>
         <Route element={<ProtectedRoutes />}>
           <Route path='/admin' element={<AdminConsole />}/>
         </Route>
