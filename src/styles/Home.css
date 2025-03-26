@@ -60,6 +60,14 @@ h1 {
     transition: ease-in-out 0.2s;
 }
 
+#logout-btn {
+    letter-spacing: 26px;
+}
+
+#admin-btn {
+    letter-spacing: 26px;
+}
+
 .background {
     display: flex;
     position: absolute;
