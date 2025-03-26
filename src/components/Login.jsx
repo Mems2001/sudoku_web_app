@@ -1,15 +1,18 @@
 import axios from "axios"
 import { useState } from "react"
 import { useForm } from 'react-hook-form'
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { setLoggedIn } from '../features/isLogged.slice'
 
 axios.defaults.withCredentials = true;
 
 function Login() {
-    const [useUsername, setUseUsername] = useState(true);
-    const [disableButton, setDisableButton] = useState(true);
-    const {register , handleSubmit , getValues , formState:{errors}} = useForm();
-    const navigate = useNavigate();
+    const [useUsername, setUseUsername] = useState(true)
+    const [disableButton, setDisableButton] = useState(true)
+    const {register , handleSubmit , getValues , formState:{errors}} = useForm()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     function handleLoginType(event) {
         setUseUsername(event.target.checked);
@@ -45,7 +48,8 @@ function Login() {
         const URL = 'http://localhost:443/api/v1/auth/login';
         axios.post(URL , newData)
             .then(res => {
-                console.log(res);
+                console.log(res)
+                dispatch(setLoggedIn())
                 navigate('/')
             })
             .catch(err => {

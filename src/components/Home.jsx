@@ -1,32 +1,17 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from 'axios'
+import { useDispatch, useSelector } from "react-redux"
+import { setLoggedIn , setLoggedOut} from '../features/isLogged.slice'
+import { setRole } from '../features/role.slice'
 
 function Home() {
 
   // const [sudokusCount, setSudokusCount] = useState(0);
-  const [isLogged , setIsLogged] = useState(false)
-  const [role , setRole] = useState('anon')
-  const navigate = useNavigate();
-
-  // async function createSudoku() {
-  //   const URL = 'http://localhost:443/api/v1/sudokus/create';
-  //   const URL2 = 'http://localhost:443/api/v1/sudokus/';
-  //   await axios.post(URL)
-  //     .then((response) => {
-  //       console.log(response.data)
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error:', error)
-  //     })
-  //   await axios.get(URL2)
-  //     .then((response) => {
-  //       setSudokusCount(response.data.count)
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error:', error)
-  //     })
-  // }
+  const isLogged = useSelector((state) => state.isLogged.value)
+  const role = useSelector((state) => state.role.value)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   function goToPuzzle () {
     const URL = 'http://localhost:443/api/v1/sudokus/get_random';
@@ -44,8 +29,8 @@ function Home() {
     const URL = 'http://localhost:443/api/v1/auth/logout'
     axios.get(URL)
       .then(() => {
-        setIsLogged(false)
-        setRole('anon')
+        dispatch(setLoggedOut())
+        dispatch(setRole('anon'))
       })
       .catch(error => {
         console.error('Error', error)
@@ -54,24 +39,23 @@ function Home() {
 
   useEffect(
     () => {
-      // const URL = 'http://localhost:443/api/v1/sudokus/';
-      // axios.get(URL)
-      //   .then((response) => {
-      //     setSudokusCount(response.data.count)
-      //   })
-      //   .catch((error) => {
-      //     console.error('Error:', error)
-      //   })
       if (!isLogged) {
         const URL = 'http://localhost:443/api/v1/auth/authenticate_session';
         axios.get(URL)
           .then((response) => {
-            console.log(response.data);
-            setIsLogged(true)
-            setRole(response.data.role)
+            console.log(response.data , response.status)
+            if (response.status == 200) {
+              dispatch(setLoggedIn())
+              dispatch(setRole(response.data.role))
+            } else {
+              dispatch(setLoggedOut())
+              dispatch(setRole('anon'))
+            }
           })
           .catch((error) => {
             console.error('Error:', error)
+            dispatch(setLoggedOut())
+            dispatch(setRole('anon'))
           })
       }
     } , [isLogged]
@@ -79,13 +63,6 @@ function Home() {
 
   return (
     <div className="home">
-      {/* <div className="homeButtons">
-        <h2>API</h2>
-        <button onClick={goToPuzzle}>Play</button>
-        <button onClick={createSudoku}>Create Sudoku</button>
-        <p>{sudokusCount}</p>
-      </div> */}
-      {/* Background design */}
       <section className="background">
       
         <h1 className="game-title">5UD0KU</h1>
