@@ -1,6 +1,6 @@
 import axios from 'axios'
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'http://localhost:443'
+// axios.defaults.baseURL = 'http://localhost:443'
 
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
