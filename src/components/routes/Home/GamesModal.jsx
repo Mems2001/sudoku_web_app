@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import variables from "../../../../utils/variables"
 
 function GamesModal({goToPuzzle , closeModal}) {
 
@@ -22,7 +23,7 @@ function GamesModal({goToPuzzle , closeModal}) {
     }
 
     function getMySavedGames() {
-        const URL = 'http://localhost:443/api/v1/games/saved'
+        const URL = variables.url_prefix + '/api/v1/games/saved'
         axios.get(URL)
             .then(res => {
                 setSaved(res.data)

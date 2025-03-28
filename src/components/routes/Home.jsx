@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { setLoggedIn , setLoggedOut} from '../../features/isLogged.slice'
 import { setRole } from '../../features/role.slice'
 import GamesModal from "./Home/GamesModal"
+import variables from '../../../utils/variables'
 
 function Home() {
 
@@ -18,8 +19,8 @@ function Home() {
   const dispatch = useDispatch()
 
   async function goToPuzzle () {
-    const URL = 'http://localhost:443/api/v1/puzzles/get_random'
-    const URL2 = 'http://localhost:443/api/v1/games'
+    const URL = variables.url_prefix + '/api/v1/puzzles/get_random'
+    const URL2 = variables.url_prefix  + '/api/v1/games'
     try {
       const puzzle = await axios.get(URL).catch((error) => {console.error('Error:', error);})
       // console.log(puzzle)
@@ -37,7 +38,7 @@ function Home() {
   }
 
   function logout() {
-    const URL = 'http://localhost:443/api/v1/auth/logout'
+    const URL = variables.url_prefix + '/api/v1/auth/logout'
     axios.get(URL)
       .then(() => {
         dispatch(setLoggedOut())
@@ -62,7 +63,7 @@ function Home() {
   useEffect(
     () => {
       if (!isLogged) {
-        const URL = 'http://localhost:443/api/v1/auth/authenticate_session';
+        const URL = variables.url_prefix + '/api/v1/auth/authenticate_session';
         axios.get(URL)
           .then((response) => {
             console.log(response.data , response.status)

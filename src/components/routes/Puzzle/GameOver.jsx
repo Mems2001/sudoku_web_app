@@ -1,11 +1,12 @@
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import variables from "../../../../utils/variables"
 
 function GameOver({game_id , puzzle , setAnswers , setAnswersN , setErrores , setTimeElapsed , setTimerOn , resetInputs }) {
     const navigate = useNavigate()
 
     function retry () {
-        const URL = `http://localhost:443/api/v1/games/${game_id}`
+        const URL = variables.url_prefix + `/api/v1/games/${game_id}`
         axios.patch(URL , {grid: puzzle.grid , number: puzzle.number , errors:0 , time:0})
             .then(res => {
                 setAnswers(res.data.grid)
@@ -19,7 +20,7 @@ function GameOver({game_id , puzzle , setAnswers , setAnswersN , setErrores , se
     }
 
     function surrender() {
-        const URL = `http://localhost:443/api/v1/games/${game_id}`
+        const URL = variables.url_prefix + `/api/v1/games/${game_id}`
         axios.patch(URL , {status:2})
             .then(() => {
                 navigate('/')

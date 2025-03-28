@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { setLoggedIn , setLoggedOut } from '../../features/isLogged.slice'
 import { setRole } from '../../features/role.slice'
+import variables from '../../../utils/variables'
 
 axios.defaults.withCredentials = true;
 // axios.defaults.baseURL = 'http://localhost:443'
@@ -47,8 +48,8 @@ function Login() {
         }
         newData['password'] = data.password
 
-        const URL = 'http://localhost:443/api/v1/auth/login';
-        const URL2 = 'http://localhost:443/api/v1/auth/authenticate_session';
+        const URL = variables.url_prefix + '/api/v1/auth/login';
+        const URL2 = variables.url_prefix + '/api/v1/auth/authenticate_session';
         axios.post(URL , newData)
             .then(res => {
                 console.log(res)

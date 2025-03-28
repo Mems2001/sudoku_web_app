@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import Header from "./Puzzle/Header";
 import GameOver from "./Puzzle/GameOver";
 import Completed from "./Puzzle/Completed";
+import variables from "../../../utils/variables";
 
 function Puzzle () {
     const game_id = useParams().game_id
@@ -82,7 +83,7 @@ function Puzzle () {
 
     function saveAnswers (grid , errores) {
       // This function also saves the game
-      const URL = `http://localhost:443/api/v1/games/${game_id}`
+      const URL = variables.url_prefix + `/api/v1/games/${game_id}`
       axios.patch(URL , {grid, time: timeElapsed , errors: errores})
         .then(res => {
           setAnswers(res.data.grid)
@@ -172,7 +173,7 @@ function Puzzle () {
     useEffect(() => {
       if (!answers) {
         try {
-          const URL = `http://localhost:443/api/v1/games/${game_id}`
+          const URL = variables.url_prefix + `/api/v1/games/${game_id}`
           axios.get(URL)
             .then(res => {
               // console.log(res)

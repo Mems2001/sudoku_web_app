@@ -1,11 +1,12 @@
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import variables from "../../../../utils/variables"
 
 function Completed({game_id , time}) {
     const navigate = useNavigate()
 
     function continueH () {
-        const URL = `http://localhost:443/api/v1/games/${game_id}`
+        const URL = variables.url_prefix + `/api/v1/games/${game_id}`
         axios.patch(URL , {time , status:1})
             .then(() => {
                 navigate('/')

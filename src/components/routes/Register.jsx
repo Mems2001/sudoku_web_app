@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import variables from "../../../utils/variables";
 
 function Register() {
     const {handleSubmit , register , formState:{errors} , getValues} = useForm()
@@ -9,7 +10,7 @@ function Register() {
     const [disableButton, setDisableButton] = useState(true)
 
     function registerSubmit (data) {
-        const URL = 'http://localhost:443/api/v1/users/register';
+        const URL = variables.url_prefix + '/api/v1/users/register';
 
         axios.post(URL , data)
             .then(() => { 
