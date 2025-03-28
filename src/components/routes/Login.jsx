@@ -7,6 +7,7 @@ import { setLoggedIn , setLoggedOut } from '../../features/isLogged.slice'
 import { setRole } from '../../features/role.slice'
 
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://localhost:443'
 
 function Login() {
     const [useUsername, setUseUsername] = useState(true)

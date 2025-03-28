@@ -1,6 +1,9 @@
+import axios from 'axios'
+axios.defaults.withCredentials = true
+axios.defaults.baseURL = 'http://localhost:443'
+
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import axios from 'axios'
 import { useDispatch, useSelector } from "react-redux"
 import { setLoggedIn , setLoggedOut} from '../../features/isLogged.slice'
 import { setRole } from '../../features/role.slice'
