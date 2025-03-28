@@ -78,8 +78,9 @@ h1 {
     width: 509px;
     height: 509px;
 
-    top:15%;
-    left: 25%;
+    top:50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
 }
 
 .background-h {
@@ -116,4 +117,67 @@ h1 {
     background: radial-gradient(circle, rgba(0 , 0 , 0 , 1) 0%, rgba(0 , 0 , 0 , 0) 100%);
     width: 2px;
     height: 100%;
+}
+
+/* Games Modal */
+
+.games-modal {
+    display: flex;
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 10;
+
+    transition: ease-in-out 0.5s;
+}
+
+.games-modal .modal-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    background-color: transparent;
+    height: fit-content;
+    max-height: 75%;
+    width: fit-content;
+    border-radius: 10%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    z-index: 12;
+}
+
+.games-modal .modal-auxiliar {
+    height: 100%;
+    width: 100%;
+    z-index: 11;
+}
+
+.games-modal button {
+    background-color: cadetblue;
+    color: white;
+    height: 55px;
+    width: 20vw;
+    border-radius: 15px;
+    transition: ease-in-out 0.25s;
+}
+
+.games-modal button:hover {
+    box-shadow: 0 0 0 5px white;
+    transition: ease-in-out 0.25s;
+}
+
+.saved-game {
+    height: fit-content !important;
+    padding: 10px 10px;
+}
+
+.inactive {
+    display: none;
+    transition: ease-in-out 0.5s;
 }

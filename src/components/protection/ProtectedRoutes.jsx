@@ -2,8 +2,8 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {Navigate , Outlet} from 'react-router-dom'
-import { setLoggedIn, setLoggedOut } from '../../../features/isLogged.slice'
-import { setRole } from '../../../features/role.slice'
+import { setLoggedIn, setLoggedOut } from '../../features/isLogged.slice'
+import { setRole } from '../../features/role.slice'
 
 function ProtectedRoutes () {
     const role = useSelector(state => state.role.value)

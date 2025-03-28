@@ -3,8 +3,8 @@ import { useState } from "react"
 import { useForm } from 'react-hook-form'
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setLoggedIn , setLoggedOut } from '../features/isLogged.slice'
-import { setRole } from '../features/role.slice'
+import { setLoggedIn , setLoggedOut } from '../../features/isLogged.slice'
+import { setRole } from '../../features/role.slice'
 
 axios.defaults.withCredentials = true;
 

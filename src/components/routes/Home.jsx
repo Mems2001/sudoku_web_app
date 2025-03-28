@@ -2,8 +2,9 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import { useDispatch, useSelector } from "react-redux"
-import { setLoggedIn , setLoggedOut} from '../features/isLogged.slice'
-import { setRole } from '../features/role.slice'
+import { setLoggedIn , setLoggedOut} from '../../features/isLogged.slice'
+import { setRole } from '../../features/role.slice'
+import GamesModal from "./Home/GamesModal"
 
 function Home() {
 
@@ -25,6 +26,7 @@ function Home() {
       }
       const game = await axios.post(URL2 , body).catch(error => {console.error(error)})
       // console.log(game)
+      closeModal()
       navigate(`/game/${game.data.id}`)
     } catch (error) {
       console.error(error)
@@ -41,6 +43,17 @@ function Home() {
       .catch(error => {
         console.error('Error', error)
       })
+  }
+
+  // Games modal functions
+
+  function openModal() {
+    const modal = document.getElementsByClassName('games-modal')[0]
+    modal.classList.remove('inactive')
+  }
+  function closeModal() {
+    const modal = document.getElementsByClassName('games-modal')[0]
+    modal.classList.add('inactive')
   }
 
   useEffect(
@@ -75,7 +88,7 @@ function Home() {
         <h1 className="game-version">2.1</h1>
 
         <div className="home-buttons">
-          <button className="home-button" onClick={goToPuzzle}>PLAY</button>
+          <button className="home-button" onClick={openModal}>PLAY</button>
           {isLogged ?
             <button className="home-button" id="logout-btn" onClick={logout}>LOGOUT</button>
               :
@@ -114,6 +127,9 @@ function Home() {
           <div className="line-v"></div>
         </div>
       </section>
+      
+      <GamesModal goToPuzzle={goToPuzzle} closeModal={closeModal}/>  
+      
     </div>
   )
 }

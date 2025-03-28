@@ -7,12 +7,12 @@ import './styles/Puzzle.css';
 import './styles/Login.css';
 
 //Components imports
-import Home from './components/Home'
-import Puzzle from './components/Puzzle'
-import Login from './components/Login'
-import Register from './components/Register'
-import ProtectedRoutes from './components/routes/protection/ProtectedRoutes';
-import AdminConsole from './components/AdminConsole';
+import Home from './components/routes/Home'
+import Puzzle from './components/routes/Puzzle'
+import Login from './components/routes/Login'
+import Register from './components/routes/Register'
+import ProtectedRoutes from './components/protection/ProtectedRoutes';
+import AdminConsole from './components/routes/AdminConsole';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoggedIn, setLoggedOut } from './features/isLogged.slice';
